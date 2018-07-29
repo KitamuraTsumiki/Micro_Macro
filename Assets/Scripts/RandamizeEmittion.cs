@@ -8,7 +8,7 @@ public class RandamizeEmittion : MonoBehaviour {
     [SerializeField]
     private UnityEvent OnEmittion;
     [SerializeField]
-    private TeleportToNewBlock teleport;
+    private PlayerPositionController positionController;
 
 	public void Emit()
     {
@@ -17,7 +17,8 @@ public class RandamizeEmittion : MonoBehaviour {
         float randomScale = Random.Range(1f, 5f);
         blockInstance.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
-        teleport.newBlock = blockInstance;
+        positionController.newBlock = blockInstance;
+        //teleport.Teleport();
         OnEmittion.Invoke();
     }
 }
