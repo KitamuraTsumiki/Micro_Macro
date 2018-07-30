@@ -9,6 +9,12 @@ public class RandamizeEmittion : MonoBehaviour {
     private UnityEvent OnEmittion;
     [SerializeField]
     private PlayerPositionController positionController;
+    [SerializeField]
+    private BlockVisualization blockVisualization;
+    [SerializeField]
+    private GameObject parentOfBlocks;
+
+    private int nextBlockId = 0;
 
 	public void Emit()
     {
@@ -17,8 +23,19 @@ public class RandamizeEmittion : MonoBehaviour {
         float randomScale = Random.Range(1f, 5f);
         blockInstance.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
+        if(parentOfBlocks != null)
+        {
+            blockInstance.transform.SetParent(parentOfBlocks.transform);
+        }
+
+        blockInstance.GetComponent<Block>().id = nextBlockId;
+        nextBlockId++;
+
         positionController.newBlock = blockInstance;
-        //teleport.Teleport();
         OnEmittion.Invoke();
+
+        if(blockVisualization == null) { return; }
+        blockVisualization.blocks.Add(blockInstance.GetComponent<Block>());
+        blockVisualization.AddLatestVisualizeBlock();
     }
 }

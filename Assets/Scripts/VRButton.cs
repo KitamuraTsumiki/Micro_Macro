@@ -45,6 +45,7 @@ public class VRButton : MonoBehaviour, IPointableUIElement
         if (!isSelectable) { return; }
         SetPressedColor();
         onClicked.Invoke();
+        SetNormalColor();
     }
 
     /// <summary>
@@ -81,6 +82,11 @@ public class VRButton : MonoBehaviour, IPointableUIElement
         //transform.localScale = originalScale;
         if (targetGraphic.color == pressedColor) { return; }
         SetDisabledColor();
+    }
+
+    private void SetNormalColor()
+    {
+        targetGraphic.color = normalColor;
     }
 
     private void SetPressedColor()

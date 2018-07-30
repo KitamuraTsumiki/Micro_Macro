@@ -97,6 +97,8 @@ public class Pointer_SteamVR : MonoBehaviour {
 
         bool isClicked = device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger);
         if (!isClicked) { return; }
+        device.TriggerHapticPulse(500);
         pointableElement.OnClicked();
+        
     }
 }

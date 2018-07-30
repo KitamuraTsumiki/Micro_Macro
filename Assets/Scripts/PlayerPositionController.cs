@@ -6,13 +6,13 @@ using UnityEngine.XR;
 public class PlayerPositionController : MonoBehaviour {
 
     public GameObject newBlock;
+    private float forceMultiplier = 5f;
 
 	private void Start () {
 		
 	}
 	
 	private void Update () {
-        ControlBlockPosition();
         TrackBlockPosition();
     }
     
@@ -23,9 +23,32 @@ public class PlayerPositionController : MonoBehaviour {
         transform.position = newPosition;
     }
 
-    private void ControlBlockPosition()
+    public void MoveBlockForward()
     {
+        if (newBlock == null) { return; }
+        Rigidbody rbd = newBlock.GetComponent<Rigidbody>();
+        rbd.AddForce(transform.forward * forceMultiplier);
+    }
 
+    public void MoveBlockBackward()
+    {
+        if (newBlock == null) { return; }
+        Rigidbody rbd = newBlock.GetComponent<Rigidbody>();
+        rbd.AddForce(new Vector3(0, 0, -1) * forceMultiplier);
+    }
+
+    public void MoveBlockLeft()
+    {
+        if (newBlock == null) { return; }
+        Rigidbody rbd = newBlock.GetComponent<Rigidbody>();
+        rbd.AddForce(new Vector3(-1, 0, 0) * forceMultiplier);
+    }
+
+    public void MoveBlockRight()
+    {
+        if (newBlock == null) { return; }
+        Rigidbody rbd = newBlock.GetComponent<Rigidbody>();
+        rbd.AddForce(new Vector3(1, 0, 0) * forceMultiplier);
     }
 
     public void Teleport()
