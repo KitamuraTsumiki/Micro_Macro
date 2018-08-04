@@ -11,19 +11,16 @@ public class PlayerPositionController : MonoBehaviour {
     private Transform playerHead;
     [SerializeField]
     private Transform standingGuide;
+    [SerializeField]
+    private VRButton blockGenerateButton;
     private float forceMultiplier = 30f;
     private float speedAdjuster = 0.06f;
     public bool isMovable { get; set; }
 
-    private void Start () {
-		
-	}
-	
-	private void Update () {
+    private void Update () {
         MoveHorizontally();
         TrackBlockPosition();
-        //MakeBlockStatic();
-        Debug.Log("isMovable: " + isMovable);
+        EnableBlockGeneration();
     }
     
     private void TrackBlockPosition()
@@ -41,14 +38,13 @@ public class PlayerPositionController : MonoBehaviour {
         Vector3 horizontalMoveDir = currentPlayerPos - standingGuide.position;
         horizontalMoveDir.y = 0f;
         Debug.Log("vel: " + horizontalMoveDir.magnitude);
+        newBlock.GetComponent<Rigidbody>().AddForce(horizontalMoveDir * forceMultiplier);
         newBlock.transform.position += horizontalMoveDir * speedAdjuster;
     }
 
-    private void MakeBlockStatic()
+    private void EnableBlockGeneration()
     {
-        if (newBlock == null || !isMovable) { return; }
-        Rigidbody rbd = newBlock.GetComponent<Rigidbody>();
-        if(rbd.velocity.magnitude > 0f) { return; }
-        isMovable = false;
+        if (isMovable) { return; }
+        blockGenerateButton.InitButtonState();
     }
 }

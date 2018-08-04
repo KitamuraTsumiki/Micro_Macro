@@ -7,15 +7,32 @@ public class DeleteInstances : MonoBehaviour {
     [SerializeField]
     private LayerMask m_layerMask;
 
-	public void Delete()
-    {
-        Vector3 deleteAreaScale = new Vector3(transform.lossyScale.x / 2, transform.lossyScale.y / 2, transform.lossyScale.z / 2);
-        Collider[] colliders = Physics.OverlapBox(transform.position, deleteAreaScale, Quaternion.identity, m_layerMask);
+    private List<GameObject> collideObjects;
 
-        foreach(Collider collider in colliders)
+    private void Start()
+    {
+        collideObjects = new List<GameObject>();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        collideObjects.Add(collision.gameObject);
+    }
+
+    public void Delete()
+    {
+        for(int i = 0; i < collideObjects.Count; i++)
         {
-            if (collider.gameObject.CompareTag("environment")) { continue; }
-            Destroy(collider.gameObject);
+            if(collideObjects[i] == null) {
+                collideObjects.RemoveAt(i);
+                continue;
+            }
+
+            GameObject obj = collideObjects[i].gameObject;
+
+            if (obj.CompareTag("environment")) { continue; }
+            collideObjects.RemoveAt(i);
+            Destroy(obj);
         }
     }
 }
