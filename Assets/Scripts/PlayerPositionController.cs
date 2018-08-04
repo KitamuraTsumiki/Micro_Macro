@@ -1,19 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
-
+/// <summary>
+/// This class controls the position of a block which is tracked by the player's camera rig
+/// </summary>
 public class PlayerPositionController : MonoBehaviour {
 
     public GameObject newBlock;
-    private float forceMultiplier = 5f;
+    [SerializeField]
+    private Transform playerHead;
+    [SerializeField]
+    private Transform standingGuide;
+    private float forceMultiplier = 30f;
+    private float speedAdjuster = 0.06f;
+    public bool isMovable { get; set; }
 
-	private void Start () {
+    private void Start () {
 		
 	}
 	
 	private void Update () {
+        MoveHorizontally();
         TrackBlockPosition();
+        //MakeBlockStatic();
+        Debug.Log("isMovable: " + isMovable);
     }
     
     private void TrackBlockPosition()
@@ -22,38 +32,23 @@ public class PlayerPositionController : MonoBehaviour {
         Vector3 newPosition = new Vector3(newBlock.transform.position.x, newBlock.transform.position.y + newBlock.transform.lossyScale.y / 2, newBlock.transform.position.z);
         transform.position = newPosition;
     }
-
-    public void MoveBlockForward()
+    
+    private void MoveHorizontally()
     {
-        if (newBlock == null) { return; }
-        Rigidbody rbd = newBlock.GetComponent<Rigidbody>();
-        rbd.AddForce(transform.forward * forceMultiplier);
+        if(newBlock == null || !isMovable) { return; }
+
+        Vector3 currentPlayerPos = playerHead.position;
+        Vector3 horizontalMoveDir = currentPlayerPos - standingGuide.position;
+        horizontalMoveDir.y = 0f;
+        Debug.Log("vel: " + horizontalMoveDir.magnitude);
+        newBlock.transform.position += horizontalMoveDir * speedAdjuster;
     }
 
-    public void MoveBlockBackward()
+    private void MakeBlockStatic()
     {
-        if (newBlock == null) { return; }
+        if (newBlock == null || !isMovable) { return; }
         Rigidbody rbd = newBlock.GetComponent<Rigidbody>();
-        rbd.AddForce(new Vector3(0, 0, -1) * forceMultiplier);
-    }
-
-    public void MoveBlockLeft()
-    {
-        if (newBlock == null) { return; }
-        Rigidbody rbd = newBlock.GetComponent<Rigidbody>();
-        rbd.AddForce(new Vector3(-1, 0, 0) * forceMultiplier);
-    }
-
-    public void MoveBlockRight()
-    {
-        if (newBlock == null) { return; }
-        Rigidbody rbd = newBlock.GetComponent<Rigidbody>();
-        rbd.AddForce(new Vector3(1, 0, 0) * forceMultiplier);
-    }
-
-    public void Teleport()
-    {
-        Vector3 newPosition = new Vector3(newBlock.transform.position.x, newBlock.transform.position.y + newBlock.transform.lossyScale.y/2, newBlock.transform.position.z);
-        transform.position = newPosition;
+        if(rbd.velocity.magnitude > 0f) { return; }
+        isMovable = false;
     }
 }

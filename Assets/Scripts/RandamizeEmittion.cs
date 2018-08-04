@@ -6,7 +6,9 @@ public class RandamizeEmittion : MonoBehaviour {
     [SerializeField]
     private GameObject block;
     [SerializeField]
-    private UnityEvent OnEmittion;
+    private UnityEvent OnBeforeEmittion;
+    [SerializeField]
+    private UnityEvent OnAfterEmittion;
     [SerializeField]
     private PlayerPositionController positionController;
     [SerializeField]
@@ -18,6 +20,8 @@ public class RandamizeEmittion : MonoBehaviour {
 
 	public void Emit()
     {
+        OnBeforeEmittion.Invoke();
+
         Vector3 emitPosition = new Vector3(Random.Range(-5f, 5f), transform.position.y, Random.Range(-5f, 5f));
         GameObject blockInstance = Instantiate(block, emitPosition, Quaternion.identity);
         float randomScale = Random.Range(1f, 5f);
@@ -32,7 +36,8 @@ public class RandamizeEmittion : MonoBehaviour {
         nextBlockId++;
 
         positionController.newBlock = blockInstance;
-        OnEmittion.Invoke();
+        positionController.isMovable = true;
+        OnAfterEmittion.Invoke();
 
         if(blockVisualization == null) { return; }
         blockVisualization.blocks.Add(blockInstance.GetComponent<Block>());
