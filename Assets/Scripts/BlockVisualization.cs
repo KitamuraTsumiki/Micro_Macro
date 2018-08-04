@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// This class controls visualization of the blocks
+/// </summary>
 public class BlockVisualization : MonoBehaviour {
     [SerializeField]
     private float scale = 0.01f;
@@ -14,11 +16,13 @@ public class BlockVisualization : MonoBehaviour {
 
     public List<Block> blocks;
     private List<Block> visualizeBlocks;
+    private List<GameObject> envVisObjects;
 
     private void Start()
     {
         blocks = new List<Block>();
         visualizeBlocks = new List<Block>();
+        envVisObjects = new List<GameObject>();
         transform.localScale = new Vector3(scale, scale, scale);
         InitEnvironmentVisualization();
     }
@@ -34,6 +38,8 @@ public class BlockVisualization : MonoBehaviour {
             envObjVisualization.transform.localScale = environmentObjects[i].transform.localScale;
 
             envObjVisualization.GetComponent<Renderer>().material = environmentVisualizeMaterial;
+
+            envVisObjects.Add(envObjVisualization);
         }
     }
 
@@ -67,11 +73,24 @@ public class BlockVisualization : MonoBehaviour {
                 visualizeBlocks.RemoveAt(i);
                 Destroy(destroyObj);
                 continue;
-        }
+            }
 
             visualizeBlocks[i].transform.localPosition = blocks[i].transform.localPosition;
             visualizeBlocks[i].transform.localRotation = blocks[i].transform.localRotation;
             visualizeBlocks[i].transform.localScale = blocks[i].transform.localScale;
         }
+
+        for (int i = 0; i < environmentObjects.Length; i++)
+        {
+            envVisObjects[i].transform.localPosition = environmentObjects[i].transform.localPosition;
+            envVisObjects[i].transform.localRotation = environmentObjects[i].transform.localRotation;
+            envVisObjects[i].transform.localScale = environmentObjects[i].transform.localScale;
+        }
+    }
+
+    public void ResetObjectsList()
+    {
+        blocks.Clear();
+        visualizeBlocks.Clear();
     }
 }

@@ -6,6 +6,8 @@ public class DeleteInstances : MonoBehaviour {
 
     [SerializeField]
     private LayerMask m_layerMask;
+    [SerializeField]
+    GameSystemManager systemManager;
 
     private List<GameObject> collideObjects;
 
@@ -17,6 +19,7 @@ public class DeleteInstances : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         collideObjects.Add(collision.gameObject);
+        systemManager.CheckGameOver(collision.gameObject);
     }
 
     public void Delete()
