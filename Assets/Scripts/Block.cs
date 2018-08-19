@@ -10,6 +10,8 @@ public class Block : MonoBehaviour {
     {
         Rigidbody rbd = GetComponent<Rigidbody>();
         if(rbd == null) { return; }
-        rbd.mass = transform.lossyScale.x * transform.lossyScale.y * transform.lossyScale.z;
+        float mass = transform.lossyScale.x * transform.lossyScale.y * transform.lossyScale.z;
+        float massAdjustMul = 15f;
+        rbd.mass = Mathf.Clamp(Mathf.Lerp(mass, 0f, 125f) * massAdjustMul, 2f, 15f);
     }
 }

@@ -13,7 +13,7 @@ public class PlayerPositionController : MonoBehaviour {
     private Transform standingGuide;
     [SerializeField]
     private VRButton blockGenerateButton;
-    private float forceMultiplier = 50f;
+    private float forceMultiplier = 100f;
     private float speedAdjuster = 0.06f;
     public bool isMovable { get; set; }
 
@@ -37,8 +37,8 @@ public class PlayerPositionController : MonoBehaviour {
         Vector3 currentPlayerPos = playerHead.position;
         Vector3 horizontalMoveDir = currentPlayerPos - standingGuide.position;
         horizontalMoveDir.y = 0f;
-        newBlock.GetComponent<Rigidbody>().AddForce(horizontalMoveDir * forceMultiplier);
-        //newBlock.transform.position += horizontalMoveDir * speedAdjuster;
+        //newBlock.GetComponent<Rigidbody>().AddForce(horizontalMoveDir * forceMultiplier);
+        newBlock.transform.position += horizontalMoveDir * speedAdjuster;
     }
 
     private void EnableBlockGeneration()
