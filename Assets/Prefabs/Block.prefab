@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4397475512555306}
   - component: {fileID: 33122437378645610}
   - component: {fileID: 23466634956010158}
-  - component: {fileID: 65720974621378268}
   - component: {fileID: 54174648684267076}
   - component: {fileID: 114006020124117872}
+  - component: {fileID: 65757461891755592}
   m_Layer: 0
   m_Name: Block
   m_TagString: block
@@ -101,7 +101,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!65 &65720974621378268
+--- !u!65 &65757461891755592
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -109,7 +109,7 @@ BoxCollider:
   m_GameObject: {fileID: 1607723033741828}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

@@ -24,8 +24,9 @@ public class RandamizeEmittion : MonoBehaviour {
 
         Vector3 emitPosition = new Vector3(Random.Range(-5f, 5f), transform.position.y, Random.Range(-5f, 5f));
         GameObject blockInstance = Instantiate(block, emitPosition, Quaternion.identity);
-        float randomScale = Random.Range(1f, 5f);
+        float randomScale = Random.Range(0.5f, 5f);
         blockInstance.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+        blockInstance.GetComponent<Collider>().enabled = true;
 
         if(parentOfBlocks != null)
         {
