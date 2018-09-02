@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 65384b6ca24f3b1469905616e6227fed
+guid: b7bf6875273230745b624e6ccfcfeee3
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: phong1
+    2100000: phong2
     2300000: //RootNode
     3300000: //RootNode
     4300000: pSphere1
