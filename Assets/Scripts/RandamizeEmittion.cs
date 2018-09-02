@@ -24,7 +24,7 @@ public class RandamizeEmittion : MonoBehaviour {
 
         Vector3 emitPosition = new Vector3(Random.Range(-5f, 5f), transform.position.y, Random.Range(-5f, 5f));
         GameObject blockInstance = Instantiate(block, emitPosition, Quaternion.identity);
-        float randomScale = Random.Range(0.5f, 5f);
+        float randomScale = Random.Range(4f, 8f);
         blockInstance.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
         blockInstance.GetComponent<Collider>().enabled = true;
 
@@ -38,6 +38,7 @@ public class RandamizeEmittion : MonoBehaviour {
 
         positionController.newBlock = blockInstance;
         positionController.isMovable = true;
+        blockInstance.GetComponent<BlockUnmovableSetter>().positionController = positionController;
         OnAfterEmittion.Invoke();
 
         if(blockVisualization == null) { return; }
