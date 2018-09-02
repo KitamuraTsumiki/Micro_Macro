@@ -27,7 +27,8 @@ public class PlayerPositionController : MonoBehaviour {
     private void TrackBlockPosition()
     {
         if (newBlock == null) { return; }
-        Vector3 newPosition = new Vector3(newBlock.transform.position.x, newBlock.transform.position.y, newBlock.transform.position.z);
+        // ISSUE: when the player is set at the center of the block, the block tends to go backward
+        Vector3 newPosition = new Vector3(newBlock.transform.position.x, newBlock.transform.position.y + newBlock.transform.lossyScale.y / 2, newBlock.transform.position.z);
         transform.position = newPosition;
     }
     
