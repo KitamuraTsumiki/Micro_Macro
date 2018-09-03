@@ -11,7 +11,9 @@ public class Block : MonoBehaviour {
         Rigidbody rbd = GetComponent<Rigidbody>();
         if(rbd == null) { return; }
         float mass = transform.lossyScale.x * transform.lossyScale.y * transform.lossyScale.z;
-        float massAdjustMul = 15f;
-        rbd.mass = Mathf.Clamp(Mathf.Lerp(mass, 0f, 125f) * massAdjustMul, 2f, 15f);
+        float massAdjustVal = 15f;
+        float minLength = 1f;
+        float maxLength = 5f;
+        rbd.mass = Mathf.Clamp(Mathf.InverseLerp(Mathf.Pow(minLength, 3), Mathf.Pow(maxLength, 3), mass) * massAdjustVal, 1f, 15f);
     }
 }

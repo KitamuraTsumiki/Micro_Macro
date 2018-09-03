@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BlockUnmovableSetter : MonoBehaviour {
 
-    [SerializeField]
-    PlayerPositionController positionController;
+    public PlayerPositionController positionController;
 
     private void OnCollisionEnter(Collision collision)
     {

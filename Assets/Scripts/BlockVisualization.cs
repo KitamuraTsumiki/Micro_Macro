@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class BlockVisualization : MonoBehaviour {
     [SerializeField]
-    private float scale = 0.01f;
+    private float scale = 0.03f;
     [SerializeField]
     private GameObject[] environmentObjects;
     [SerializeField]
